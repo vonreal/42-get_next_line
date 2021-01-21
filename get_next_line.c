@@ -21,7 +21,7 @@ int		get_next_line(int fd, char **line)
 
 	if (fd < 0 || line == NULL || BUFFER_SIZE < 1)
 		return (-1);
-	if (!(buf = (char *)malloc(sieof(char) * (BUFFER_SIZE + 1))))
+	if (!(buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
 	while ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
@@ -33,7 +33,7 @@ int		get_next_line(int fd, char **line)
 			if (!(backup = (char *)malloc(sizeof(char) * (ft_strlen(temp) + read_size + 1))))
 				return (-1);
 			ft_strlcpy(backup, temp, (ft_strlen(temp) + 1));
-			ft_strlcpy(backup[ft_strlen(temp)], buf, (ft_strlen(buf) + 1));
+			ft_strlcpy(&backup[ft_strlen(temp)], buf, (ft_strlen(buf) + 1));
 			free(temp);
 			temp = NULL;
 		}
@@ -42,6 +42,6 @@ int		get_next_line(int fd, char **line)
 	}
 	free(buf);
 	if (read_size < 0)
-		reurn (-1);
+		return (-1);
 	return (0);
 }
