@@ -19,7 +19,7 @@ int		get_newline(char **str)
 	newline = 0;
 	while (*(*str + newline))
 	{
-		if ((*(*str + newline) == '\n')
+		if ((*(*str + newline) == '\n'))
 			return (newline);
 		newline++;
 	}
@@ -122,5 +122,5 @@ int		get_next_line(int fd, char **line)
 	}
 	free(buf);
 	buf = NULL;
-	return (last_return(&backup, line, read_size);
+	return (last_return(&backup, line, read_size));
 }
