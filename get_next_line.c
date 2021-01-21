@@ -12,6 +12,39 @@
 
 #include "get_next_line.h"
 
+int		get_newline(char *str)
+{
+	int			newline;
+
+	newline = 0;
+	while (str[newline])
+	{
+		if (str[newline] == '\n')
+			return (newline);
+		newline++;
+	}
+	return (-1);
+}
+
+int		append_backup(char **backup, char **buf, int read_size)
+{
+	char		*temp;
+
+	if (*backup == NULL)
+		*backup = ft_strdup(*buf);
+	else
+	{
+		temp = *backup;
+		if (!(*backup = (char *)malloc(sizeof(char) * (ft_strlen(temp) + read_size + 1))))
+			return (-1);
+		ft_strlcpy(*backup, temp, (ft_strlen(temp) + 1));
+		ft_strlcpy(*backup + ft_strlen(temp), *buf, (ft_strlen(*buf) + 1));
+		free(temp);
+		temp = NULL;
+	}
+	return (0);
+}
+
 int		set_backup(char **backup, int newline)
 {
 	char		*temp;
@@ -48,39 +81,6 @@ int		return_line(char **backup, int newline, char **line)
 	ft_strlcpy(one_line, *backup, (size + 1));
 	*line = one_line;
 	return (set_backup(backup, newline));
-}
-
-int		append_backup(char **backup, char **buf, int read_size)
-{
-	char		*temp;
-
-	if (*backup == NULL)
-		*backup = ft_strdup(*buf);
-	else
-	{
-		temp = *backup;
-		if (!(*backup = (char *)malloc(sizeof(char) * (ft_strlen(temp) + read_size + 1))))
-			return (-1);
-		ft_strlcpy(*backup, temp, (ft_strlen(temp) + 1));
-		ft_strlcpy(*backup + ft_strlen(temp), *buf, (ft_strlen(*buf) + 1));
-		free(temp);
-		temp = NULL;
-	}
-	return (0);
-}
-
-int		get_newline(char *str)
-{
-	int			newline;
-
-	newline = 0;
-	while (str[newline])
-	{
-		if (str[newline] == '\n')
-			return (newline);
-		newline++;
-	}
-	return (-1);
 }
 
 int		get_next_line(int fd, char **line)
