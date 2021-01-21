@@ -6,7 +6,7 @@
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 00:20:10 by jna               #+#    #+#             */
-/*   Updated: 2021/01/22 00:20:10 by jna              ###   ########.fr       */
+/*   Updated: 2021/01/22 05:39:08 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 char	*ft_strdup(char *str)
 {
 	char			*strdup;
-	
+
 	if (str == NULL)
 		return (0);
 	if (!(strdup = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1))))
