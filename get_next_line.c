@@ -6,7 +6,7 @@
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 00:10:33 by jna               #+#    #+#             */
-/*   Updated: 2021/01/22 00:10:33 by jna              ###   ########.fr       */
+/*   Updated: 2021/01/22 05:36:06 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		append_backup(char **backup, char **buf, int read_size)
 		size = ft_strlen(temp) + read_size;
 		if (!(*backup = (char *)malloc(sizeof(char) * (size + 1))))
 		{
+			free(*buf);
 			free(temp);
 			temp = NULL;
 			return (-1);
@@ -81,10 +82,11 @@ int		return_line(char **backup, int newline, char **line)
 	return (set_backup(backup, newline));
 }
 
-int		last_return(char **backup, char **line, int read_size)
+int		last_return(char **backup, char **buf, char **line, int read_size)
 {
 	int			newline;
 
+	free(*buf);
 	if (read_size < 0)
 		return (-1);
 	if (*backup == NULL)
@@ -116,9 +118,7 @@ int		get_next_line(int fd, char **line)
 		buf[read_size] = '\0';
 		if (append_backup(&backup, &buf, read_size) < 0)
 		{
-			free(buf);
 			free(backup);
-			backup = NULL;
 			return (-1);
 		}
 		if ((newline = get_newline(&buf)) >= 0)
@@ -128,6 +128,5 @@ int		get_next_line(int fd, char **line)
 			return (return_line(&backup, newline, line));
 		}
 	}
-	free(buf);
-	return (last_return(&backup, line, read_size));
+	return (last_return(&backup, &buf, line, read_size));
 }
