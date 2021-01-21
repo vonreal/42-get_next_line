@@ -76,7 +76,10 @@ int		last_return(char **backup, char **line, int read_size)
 	if (read_size < 0)
 		return (-1);
 	if (*backup == NULL)
+	{
+		*line = ft_strdup("");
 		return (0);
+	}
 	if ((newline = get_newline(backup)) >= 0)
 		return (return_line(backup, newline, line));
 	*line = ft_strdup(*backup);
