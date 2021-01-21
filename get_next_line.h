@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
+int		get_newline(char **str);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strdup(char *str);
