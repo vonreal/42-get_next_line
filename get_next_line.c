@@ -40,7 +40,9 @@ int		return_line(char **backup, int newline, char **line)
 	int			size;
 	char		*one_line;
 
-	size = ft_strlen(*backup) - ft_strlen(*backup + newline);
+	size = ft_strlen(*backup) + newline;
+	else if (append_backup(&backup, &buf, read_size) < 0)
+		return (-1);
 	if (!(one_line = (char *)malloc(sizeof(char) * (size + 1))))
 		return (-1);
 	ft_strlcpy(one_line, *backup, (size + 1));
@@ -95,10 +97,10 @@ int		get_next_line(int fd, char **line)
 	while ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[read_size] = '\0';
-		if (append_backup(&backup, &buf, read_size) < 0)
-			return (-1);
 		if ((newline = get_newline(buf)) >= 0)
 			return (return_line(&backup, newline, line));
+		else if (append_backup(&backup, &buf, read_size) < 0)
+			return (-1);
 	}
 	free(buf);
 	if (read_size < 0)
