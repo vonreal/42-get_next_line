@@ -39,8 +39,8 @@ int		return_line(char **backup, int newline, char **line)
 {
 	int			size;
 	char		*one_line;
-	
-	size = ft_strlen(*backup) + ft_strlen(*backup + newline);
+
+	size = ft_strlen(*backup) - ft_strlen(*backup + newline);
 	if (!(one_line = (char *)malloc(sizeof(char) * (size + 1))))
 		return (-1);
 	ft_strlcpy(one_line, *backup, (size + 1));
