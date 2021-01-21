@@ -22,35 +22,12 @@ size_t		ft_strlen(const char *s)
 	return (count);
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
-{
-	unsigned int	size;
-	unsigned int	idx;
-
-	size = ft_strlen(dst);
-	idx = 0;
-	if ((size + idx + 1) < dstsize)
-	{
-		while (src[idx] && (size + idx + 1) < dstsize)
-		{
-			dst[size + idx] = src[idx];
-			idx++;
-		}
-		dst[size + idx] = '\0';
-	}
-	if (dstsize == 0)
-		return (ft_strlen(src));
-	if (dstsize < size)
-		return (dstsize + ft_strlen(src));
-	return (size + ft_strlen(src));
-}
-
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	unsigned int	count;
 
 	count = 0;
-	if (dst == '\0' || src == '\0')
+	if (dst == NULL || src == NULL)
 		return (0);
 	if (dstsize == 0)
 		return (ft_strlen(src));
@@ -62,6 +39,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	if (dstsize != 0)
 		dst[count] = '\0';
 	return (ft_strlen(src));
+}
 
 char	*ft_strdup(char *str)
 {

@@ -33,9 +33,10 @@ int		get_next_line(int fd, char **line)
 			if (!(backup = (char *)malloc(sizeof(char) * (ft_strlen(temp) + read_size + 1))))
 				return (-1);
 			ft_strlcpy(backup, temp, (ft_strlen(temp) + 1));
-			ft_strlcat(backup, buf, );
-		}
-		
+			ft_strlcpy(backup[ft_strlen(temp)], buf, (ft_strlen(buf) + 1));
+			free(temp);
+			temp = NULL;
+		}	
 	}
 	free(buf);
 	if (read_size < 0)
