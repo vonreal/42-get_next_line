@@ -12,30 +12,18 @@
 
 #include "get_next_line.h"
 
-int		get_newline(char **str)
-{
-	int			newline;
-
-	newline = 0;
-	while (*(*str + newline))
-	{
-		if ((*(*str + newline) == '\n'))
-			return (newline);
-		newline++;
-	}
-	return (-1);
-}
-
 int		append_backup(char **backup, char **buf, int read_size)
 {
 	char		*temp;
+	int			size;
 
 	if (*backup == NULL)
 		*backup = ft_strdup(*buf);
 	else
 	{
+		size = ft_strlen(temp) + read_size;
 		temp = *backup;
-		if (!(*backup = (char *)malloc(sizeof(char) * (ft_strlen(temp) + read_size + 1))))
+		if (!(*backup = (char *)malloc(sizeof(char) * (size + 1))))
 			return (-1);
 		ft_strlcpy(*backup, temp, (ft_strlen(temp) + 1));
 		ft_strlcpy(*backup + ft_strlen(temp), *buf, (ft_strlen(*buf) + 1));
@@ -93,7 +81,7 @@ int		last_return(char **backup, char **line, int read_size)
 		return (return_line(backup, newline, line));
 	*line = ft_strdup(*backup);
 	free(*backup);
-	*backup == NULL;
+	*backup = NULL;
 	return (0);
 }
 
@@ -115,7 +103,7 @@ int		get_next_line(int fd, char **line)
 		if (append_backup(&backup, &buf, read_size) < 0)
 			return (-1);
 		if ((newline = get_newline(&buf)) >= 0)
-		{ 
+		{
 			newline = ft_strlen(backup) - (read_size - newline);
 			return (return_line(&backup, newline, line));
 		}

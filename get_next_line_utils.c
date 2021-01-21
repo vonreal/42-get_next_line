@@ -12,7 +12,21 @@
 
 #include "get_next_line.h"
 
-size_t		ft_strlen(const char *s)
+int		get_newline(char **str)
+{
+	int			newline;
+
+	newline = 0;
+	while (*(*str + newline))
+	{
+		if (*(*str + newline) == '\n')
+			return (newline);
+		newline++;
+	}
+	return (-1);
+}
+
+size_t	ft_strlen(const char *s)
 {
 	unsigned int	count;
 
