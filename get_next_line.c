@@ -91,7 +91,6 @@ int		get_next_line(int fd, char **line)
 	char		*buf;
 	int			read_size;
 	int			newline;
-	int			size;
 
 	if (fd < 0 || line == NULL || BUFFER_SIZE < 1)
 		return (-1);
