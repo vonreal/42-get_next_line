@@ -21,8 +21,8 @@ int		append_backup(char **backup, char **buf, int read_size)
 		*backup = ft_strdup(*buf);
 	else
 	{
-		size = ft_strlen(temp) + read_size;
 		temp = *backup;
+		size = ft_strlen(temp) + read_size;
 		if (!(*backup = (char *)malloc(sizeof(char) * (size + 1))))
 			return (-1);
 		ft_strlcpy(*backup, temp, (ft_strlen(temp) + 1));
