@@ -37,6 +37,7 @@ int		get_next_line(int fd, char **line)
 			free(temp);
 			temp = NULL;
 		}
+		*line = backup;
 		return (1);
 	}
 	free(buf);
