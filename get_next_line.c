@@ -36,7 +36,8 @@ int		get_next_line(int fd, char **line)
 			ft_strlcpy(backup[ft_strlen(temp)], buf, (ft_strlen(buf) + 1));
 			free(temp);
 			temp = NULL;
-		}	
+		}
+		return (1);
 	}
 	free(buf);
 	if (read_size < 0)
