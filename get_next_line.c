@@ -12,14 +12,14 @@
 
 #include "get_next_line.h"
 
-int		get_newline(char *str)
+int		get_newline(char **str)
 {
 	int			newline;
 
 	newline = 0;
-	while (str[newline])
+	while (*(*str + newline))
 	{
-		if (str[newline] == '\n')
+		if ((*(*str + newline) == '\n')
 			return (newline);
 		newline++;
 	}
@@ -81,6 +81,22 @@ int		return_line(char **backup, int newline, char **line)
 	return (set_backup(backup, newline));
 }
 
+int		last_return(char **backup, char **line, int read_size)
+{
+	int			newline;
+
+	if (read_size < 0)
+		return (-1);
+	if (*backup == NULL)
+		return (0);
+	if ((newline = get_newline(backup)) >= 0)
+		return (return_line(backup, newline, line));
+	*line = ft_strdup(*backup);
+	free(*backup);
+	*backup == NULL;
+	return (0);
+}
+
 int		get_next_line(int fd, char **line)
 {
 	static char	*backup;
@@ -98,16 +114,13 @@ int		get_next_line(int fd, char **line)
 		buf[read_size] = '\0';
 		if (append_backup(&backup, &buf, read_size) < 0)
 			return (-1);
-		if ((newline = get_newline(buf)) >= 0)
+		if ((newline = get_newline(&buf)) >= 0)
 		{ 
 			newline = ft_strlen(backup) - (read_size - newline);
 			return (return_line(&backup, newline, line));
 		}
 	}
 	free(buf);
-	if (read_size < 0)
-		return (-1);
-	*line = ft_strdup(backup);
-	free(backup);
-	return (0);
+	buf = NULL;
+	return (last_return(&backup, line, read_size);
 }
