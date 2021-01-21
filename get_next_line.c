@@ -44,7 +44,7 @@ int		get_next_line(int fd, char **line)
 	{
 		if (append_backup(&backup, &buf, read_size) < 0)
 			return (-1);
-		*line = backup;
+		*line = ft_strdup(backup);
 		return (1);
 	}
 	free(buf);
