@@ -124,7 +124,6 @@ int		get_next_line(int fd, char **line)
 		if ((newline = get_newline(&backup[fd])) >= 0)
 		{
 			free(buf);
-			newline = ft_strlen(backup[fd]) - (read_size - newline);
 			return (return_line(&backup[fd], newline, line));
 		}
 	}
