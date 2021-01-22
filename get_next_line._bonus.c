@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line._bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/22 00:10:33 by jna               #+#    #+#             */
-/*   Updated: 2021/01/22 05:36:06 by jna              ###   ########.fr       */
+/*   Created: 2021/01/22 14:46:08 by jna               #+#    #+#             */
+/*   Updated: 2021/01/22 14:46:08 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		append_backup(char **backup, char **buf, int read_size)
 {
@@ -104,7 +104,7 @@ int		last_return(char **backup, char **buf, char **line, int read_size)
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*backup;
+	static char	*backup[OPEN_MAX];
 	char		*buf;
 	int			read_size;
 	int			newline;
@@ -116,17 +116,17 @@ int		get_next_line(int fd, char **line)
 	while ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[read_size] = '\0';
-		if (append_backup(&backup, &buf, read_size) < 0)
+		if (append_backup(&backup[fd], &buf, read_size) < 0)
 		{
-			free(backup);
+			free(backup[fd]);
 			return (-1);
 		}
 		if ((newline = get_newline(&backup)) >= 0)
 		{
 			free(buf);
-			newline = ft_strlen(backup) - (read_size - newline);
-			return (return_line(&backup, newline, line));
+			newline = ft_strlen(backup[fd]) - (read_size - newline);
+			return (return_line(&backup[fd], newline, line));
 		}
 	}
-	return (last_return(&backup, &buf, line, read_size));
+	return (last_return(&backup[fd], &buf, line, read_size));
 }
